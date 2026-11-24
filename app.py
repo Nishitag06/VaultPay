@@ -40,64 +40,215 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Fintech-inspired theme: dark navy, white text, green accents
+# Fintech-inspired theme: dark navy, white text, teal accents
+# Designed for high contrast and readability on local and Streamlit Cloud deployments
 st.markdown("""
 <style>
-    /* ── Global ───────────────────────────────────────── */
+    /* ── Global Background & Text ─────────────────────── */
     .stApp {
-        background-color: #0a1628;
-    }
-    section[data-testid="stSidebar"] {
-        background-color: #0d1f3c;
+        background-color: #0a1628 !important;
+        color: #f1f5f9 !important;
     }
 
-    /* ── Metric / balance cards ───────────────────────── */
-    div[data-testid="stMetric"] {
-        background: linear-gradient(135deg, #0d1f3c 0%, #162d50 100%);
-        border: 1px solid #1e3a5f;
-        border-radius: 12px;
-        padding: 16px 20px;
-    }
-    div[data-testid="stMetric"] label {
-        color: #8899aa !important;
-    }
-    div[data-testid="stMetric"] div[data-testid="stMetricValue"] {
-        color: #00d09c !important;
-        font-weight: 700;
+    /* Force all paragraphs, spans, divs, and list items to readable off-white */
+    .stApp p, .stApp span, .stApp div, .stApp li {
+        color: #e2e8f0;
     }
 
-    /* ── Buttons ──────────────────────────────────────── */
-    .stButton > button {
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.01em;
+    }
+
+    /* Brand Logo / Title */
+    .brand-title {
+        font-size: 2.5rem;
+        font-weight: 800;
         background: linear-gradient(135deg, #00d09c 0%, #00b386 100%);
-        color: #0a1628;
-        font-weight: 600;
-        border: none;
-        border-radius: 8px;
-        padding: 0.5rem 1.5rem;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.25rem;
+    }
+
+    /* Captions & secondary muted text */
+    .stCaption, [data-testid="stCaptionContainer"], [data-testid="stCaptionContainer"] p {
+        color: #94a3b8 !important;
+        font-size: 0.92rem !important;
+    }
+
+    /* Markdown text, strong tags, and bullet points */
+    .stMarkdown, .stMarkdown p, .stMarkdown ul, .stMarkdown li {
+        color: #cbd5e1 !important;
+        line-height: 1.6;
+    }
+    .stMarkdown strong {
+        color: #ffffff !important;
+    }
+
+    /* ── Sidebar ───────────────────────────────────────── */
+    section[data-testid="stSidebar"] {
+        background-color: #0d1f3c !important;
+        border-right: 1px solid #1e3a5f !important;
+    }
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] span,
+    section[data-testid="stSidebar"] div,
+    section[data-testid="stSidebar"] label {
+        color: #cbd5e1 !important;
+    }
+    section[data-testid="stSidebar"] .stButton > button {
+        background: #132a4e !important;
+        color: #f1f5f9 !important;
+        border: 1px solid #1e3a5f !important;
+        font-weight: 500 !important;
+        border-radius: 8px !important;
+        padding: 0.5rem 1rem !important;
+        margin-bottom: 4px;
         transition: all 0.2s ease;
     }
-    .stButton > button:hover {
-        background: linear-gradient(135deg, #00e6ac 0%, #00cc99 100%);
+    section[data-testid="stSidebar"] .stButton > button:hover {
+        background: #00d09c !important;
+        color: #0a1628 !important;
+        border-color: #00d09c !important;
+        font-weight: 700 !important;
         transform: translateY(-1px);
     }
 
-    /* ── Headings ─────────────────────────────────────── */
-    h1, h2, h3 { color: #ffffff; }
-    .brand-title {
-        font-size: 2.4rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #00d09c, #00b386);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+    /* ── Form Labels & Inputs ──────────────────────────── */
+    label[data-testid="stWidgetLabel"],
+    label[data-testid="stWidgetLabel"] p,
+    label[data-testid="stWidgetLabel"] div {
+        color: #f1f5f9 !important;
+        font-weight: 600 !important;
+        font-size: 0.92rem !important;
+        margin-bottom: 4px !important;
     }
 
-    /* ── Success / error banners ──────────────────────── */
+    div[data-baseweb="input"] {
+        background-color: #0d1f3c !important;
+        border: 1px solid #1e3a5f !important;
+        border-radius: 8px !important;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    div[data-baseweb="input"]:focus-within {
+        border-color: #00d09c !important;
+        box-shadow: 0 0 0 1px #00d09c !important;
+    }
+    div[data-baseweb="input"] input {
+        color: #ffffff !important;
+        background-color: transparent !important;
+        font-size: 0.95rem !important;
+    }
+    div[data-baseweb="input"] input::placeholder {
+        color: #64748b !important;
+    }
+
+    /* Form Card Container */
+    div[data-testid="stForm"] {
+        background: #0d1f3c !important;
+        border: 1px solid #1e3a5f !important;
+        border-radius: 12px !important;
+        padding: 24px 28px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    /* Primary Action Buttons */
+    .stButton > button {
+        background: linear-gradient(135deg, #00d09c 0%, #00b386 100%) !important;
+        color: #0a1628 !important;
+        font-weight: 700 !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 0.55rem 1.6rem !important;
+        font-size: 0.98rem !important;
+        transition: all 0.2s ease;
+    }
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #00e6ac 0%, #00cc99 100%) !important;
+        box-shadow: 0 4px 14px rgba(0, 208, 156, 0.35) !important;
+        transform: translateY(-1px);
+    }
+
+    /* ── Tabs Styling ──────────────────────────────────── */
+    div[data-baseweb="tab-list"] {
+        background-color: transparent !important;
+        border-bottom: 2px solid #1e3a5f !important;
+        gap: 8px !important;
+        padding-bottom: 2px !important;
+    }
+    button[data-baseweb="tab"] {
+        color: #94a3b8 !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        padding: 8px 18px !important;
+        border-radius: 6px 6px 0 0 !important;
+        transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease !important;
+    }
+    button[data-baseweb="tab"]:hover {
+        color: #f1f5f9 !important;
+    }
+    button[data-baseweb="tab"][aria-selected="true"] {
+        color: #00d09c !important;
+        border-bottom: 2px solid #00d09c !important;
+        background-color: rgba(0, 208, 156, 0.08) !important;
+    }
+
+    /* ── Metric / Balance Cards ────────────────────────── */
+    div[data-testid="stMetric"] {
+        background: linear-gradient(135deg, #0d1f3c 0%, #162d50 100%) !important;
+        border: 1px solid #1e3a5f !important;
+        border-radius: 12px !important;
+        padding: 18px 22px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    }
+    div[data-testid="stMetric"] label,
+    div[data-testid="stMetric"] label p {
+        color: #94a3b8 !important;
+        font-weight: 500 !important;
+        font-size: 0.9rem !important;
+    }
+    div[data-testid="stMetric"] div[data-testid="stMetricValue"],
+    div[data-testid="stMetric"] div[data-testid="stMetricValue"] div {
+        color: #00d09c !important;
+        font-weight: 700 !important;
+        font-size: 1.65rem !important;
+    }
+
+    /* ── Alert Banners (info, success, error, warning) ── */
     div[data-testid="stAlert"] {
-        border-radius: 8px;
+        border-radius: 8px !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        padding: 12px 18px !important;
+    }
+    div[data-testid="stAlert"] p,
+    div[data-testid="stAlert"] li,
+    div[data-testid="stAlert"] div {
+        color: #ffffff !important;
+        font-weight: 500 !important;
     }
 
-    /* ── Tables / dataframes ──────────────────────────── */
-    .stDataFrame { border-radius: 8px; overflow: hidden; }
+    /* ── Tables and Dataframes ─────────────────────────── */
+    .stDataFrame {
+        border-radius: 10px !important;
+        border: 1px solid #1e3a5f !important;
+        overflow: hidden !important;
+    }
+
+    /* ── Info Card Container ───────────────────────────── */
+    .vaultpay-card {
+        background: linear-gradient(145deg, #0d1f3c 0%, #132a4e 100%);
+        border: 1px solid #1e3a5f;
+        border-radius: 14px;
+        padding: 28px 32px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Horizontal Divider */
+    hr {
+        border-color: #1e3a5f !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -218,21 +369,26 @@ _sidebar()
 
 def page_welcome():
     _touch()
-    col1, col2 = st.columns([1.1, 1.1])
+    col1, col2 = st.columns([1, 1.2], gap="large")
 
     with col1:
-        st.markdown('<p class="brand-title">VaultPay</p>',
-                    unsafe_allow_html=True)
-        st.markdown("### Secure Digital Wallet Simulator")
-        st.markdown(
-            "A sandboxed digital wallet demonstrating **Secure Software "
-            "Engineering (SSE)** principles:\n\n"
-            "- **Authentication**: Multi-factor credentials & automated lockout\n"
-            "- **Input Validation**: Strict amount & credential checks\n"
-            "- **Role-Based Access Control (RBAC)**: Distinct User & Admin roles\n"
-            "- **Data Integrity**: Atomic transactions & integer paise balance\n"
-            "- **Audit Logging**: Tamper-evident activity logs without secrets"
-        )
+        st.markdown("""
+        <div class="vaultpay-card">
+            <p class="brand-title">VaultPay</p>
+            <h3 style="margin-top: -6px; margin-bottom: 14px; color: #f1f5f9;">Secure Digital Wallet Simulator</h3>
+            <p style="color: #cbd5e1; font-size: 1rem; line-height: 1.6; margin-bottom: 14px;">
+                A sandboxed digital wallet demonstrating core <strong>Secure Software Engineering (SSE)</strong> principles:
+            </p>
+            <ul style="color: #cbd5e1; font-size: 0.94rem; line-height: 1.85; padding-left: 20px; margin-bottom: 0;">
+                <li><strong>Authentication</strong>: Multi-factor credentials & automated lockout</li>
+                <li><strong>Input Validation</strong>: Strict amount & credential checks</li>
+                <li><strong>Role-Based Access Control (RBAC)</strong>: Distinct User & Admin roles</li>
+                <li><strong>Data Integrity</strong>: Atomic transactions & integer paise balance</li>
+                <li><strong>Audit Logging</strong>: Tamper-evident activity logs without secrets</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
         st.info("Note: This is an academic simulation — no real banking APIs are involved.")
 
     with col2:
@@ -362,33 +518,35 @@ def page_welcome():
 
 def page_register():
     _touch()
-    st.markdown("### Create Your Account")
-    st.info(
-        "**Security Requirements:**\n"
-        "- **Password**: Minimum 8 characters with at least 1 uppercase letter, 1 lowercase letter, and 1 number.\n"
-        "- **Transaction PIN**: 4 to 6 numeric digits."
-    )
+    col_l, col_m, col_r = st.columns([0.4, 2.2, 0.4])
+    with col_m:
+        st.markdown("### Create Your Account")
+        st.info(
+            "**Security Requirements:**\n"
+            "- **Password**: Minimum 8 characters with at least 1 uppercase letter, 1 lowercase letter, and 1 number.\n"
+            "- **Transaction PIN**: 4 to 6 numeric digits."
+        )
 
-    with st.form("register_form"):
-        name     = st.text_input("Full Name")
-        username = st.text_input("Username")
-        email    = st.text_input("Email")
-        password = st.text_input("Password", type="password")
-        confirm  = st.text_input("Confirm Password", type="password")
-        pin      = st.text_input("Transaction PIN (4–6 digits)", type="password")
-        submitted = st.form_submit_button("Register", use_container_width=True)
+        with st.form("register_form"):
+            name     = st.text_input("Full Name")
+            username = st.text_input("Username")
+            email    = st.text_input("Email")
+            password = st.text_input("Password", type="password")
+            confirm  = st.text_input("Confirm Password", type="password")
+            pin      = st.text_input("Transaction PIN (4–6 digits)", type="password")
+            submitted = st.form_submit_button("Register", use_container_width=True)
 
-        if submitted:
-            if not all([name, username, email, password, confirm, pin]):
-                st.error("Please fill in all fields.")
-            elif password != confirm:
-                st.error("Passwords do not match.")
-            else:
-                ok, msg = register_user(name, username, email, password, pin)
-                if ok:
-                    st.success(msg)
+            if submitted:
+                if not all([name, username, email, password, confirm, pin]):
+                    st.error("Please fill in all fields.")
+                elif password != confirm:
+                    st.error("Passwords do not match.")
                 else:
-                    st.error(msg)
+                    ok, msg = register_user(name, username, email, password, pin)
+                    if ok:
+                        st.success(msg)
+                    else:
+                        st.error(msg)
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -401,42 +559,44 @@ def page_admin_setup():
         st.warning("An admin account already exists.")
         return
 
-    st.markdown("###  Initial Admin Setup")
-    st.info(
-        "Create the first administrator account. "
-        "Check the **terminal / console** where Streamlit is running "
-        "to find the one-time **Setup Key**."
-    )
+    col_l, col_m, col_r = st.columns([0.4, 2.2, 0.4])
+    with col_m:
+        st.markdown("### Initial Admin Setup")
+        st.info(
+            "Create the first administrator account. "
+            "Check the **terminal / console** where Streamlit is running "
+            "to find the one-time **Setup Key**."
+        )
 
-    # Generate and persist the setup key in session
-    if not st.session_state.get("setup_key"):
-        key = generate_setup_key()
-        st.session_state.setup_key = key
-        # Print to server console so only the person running the server sees it
-        print("\n" + "=" * 60)
-        print("  VAULTPAY — ADMIN SETUP KEY (use once, then discard)")
-        print(f"  {key}")
-        print("=" * 60 + "\n")
+        # Generate and persist the setup key in session
+        if not st.session_state.get("setup_key"):
+            key = generate_setup_key()
+            st.session_state.setup_key = key
+            # Print to server console so only the person running the server sees it
+            print("\n" + "=" * 60)
+            print("  VAULTPAY — ADMIN SETUP KEY (use once, then discard)")
+            print(f"  {key}")
+            print("=" * 60 + "\n")
 
-    with st.form("admin_setup_form"):
-        setup_key = st.text_input("Setup Key (from terminal)")
-        name      = st.text_input("Admin Full Name")
-        username  = st.text_input("Admin Username")
-        email     = st.text_input("Admin Email")
-        password  = st.text_input("Password", type="password")
-        pin       = st.text_input("Transaction PIN", type="password")
-        submitted = st.form_submit_button("Create Admin", use_container_width=True)
+        with st.form("admin_setup_form"):
+            setup_key = st.text_input("Setup Key (from terminal)")
+            name      = st.text_input("Admin Full Name")
+            username  = st.text_input("Admin Username")
+            email     = st.text_input("Admin Email")
+            password  = st.text_input("Password", type="password")
+            pin       = st.text_input("Transaction PIN", type="password")
+            submitted = st.form_submit_button("Create Admin", use_container_width=True)
 
-        if submitted:
-            ok, msg = create_admin(
-                name, username, email, password, pin,
-                setup_key, st.session_state.setup_key,
-            )
-            if ok:
-                st.success(msg + " You can now log in.")
-                st.session_state.setup_key = None  # Invalidate the key
-            else:
-                st.error(msg)
+            if submitted:
+                ok, msg = create_admin(
+                    name, username, email, password, pin,
+                    setup_key, st.session_state.setup_key,
+                )
+                if ok:
+                    st.success(msg + " You can now log in.")
+                    st.session_state.setup_key = None  # Invalidate the key
+                else:
+                    st.error(msg)
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -488,25 +648,27 @@ def page_dashboard():
 def page_deposit():
     _touch()
     user = st.session_state.user
-    st.markdown("### Deposit Money")
-    balance = get_wallet_summary(user["user_id"])["balance"]
-    st.info(f"Current balance: **{paise_to_rupees(balance)}**")
+    col_l, col_m, col_r = st.columns([0.4, 2.2, 0.4])
+    with col_m:
+        st.markdown("### Deposit Money")
+        balance = get_wallet_summary(user["user_id"])["balance"]
+        st.info(f"Current balance: **{paise_to_rupees(balance)}**")
 
-    with st.form("deposit_form"):
-        amount = st.text_input("Amount (₹)", placeholder="e.g. 1000")
-        pin    = st.text_input("Transaction PIN", type="password")
-        submitted = st.form_submit_button("Deposit", use_container_width=True)
+        with st.form("deposit_form"):
+            amount = st.text_input("Amount (₹)", placeholder="e.g. 1000")
+            pin    = st.text_input("Transaction PIN", type="password")
+            submitted = st.form_submit_button("Deposit", use_container_width=True)
 
-        if submitted:
-            if not amount or not pin:
-                st.error("Please fill in all fields.")
-            else:
-                ok, msg = deposit(user["user_id"], amount, pin)
-                if ok:
-                    st.success(msg)
-                    st.rerun()
+            if submitted:
+                if not amount or not pin:
+                    st.error("Please fill in all fields.")
                 else:
-                    st.error(msg)
+                    ok, msg = deposit(user["user_id"], amount, pin)
+                    if ok:
+                        st.success(msg)
+                        st.rerun()
+                    else:
+                        st.error(msg)
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -516,25 +678,27 @@ def page_deposit():
 def page_withdraw():
     _touch()
     user = st.session_state.user
-    st.markdown("### Withdraw Money")
-    balance = get_wallet_summary(user["user_id"])["balance"]
-    st.info(f"Current balance: **{paise_to_rupees(balance)}**")
+    col_l, col_m, col_r = st.columns([0.4, 2.2, 0.4])
+    with col_m:
+        st.markdown("### Withdraw Money")
+        balance = get_wallet_summary(user["user_id"])["balance"]
+        st.info(f"Current balance: **{paise_to_rupees(balance)}**")
 
-    with st.form("withdraw_form"):
-        amount = st.text_input("Amount (₹)", placeholder="e.g. 500")
-        pin    = st.text_input("Transaction PIN", type="password")
-        submitted = st.form_submit_button("Withdraw", use_container_width=True)
+        with st.form("withdraw_form"):
+            amount = st.text_input("Amount (₹)", placeholder="e.g. 500")
+            pin    = st.text_input("Transaction PIN", type="password")
+            submitted = st.form_submit_button("Withdraw", use_container_width=True)
 
-        if submitted:
-            if not amount or not pin:
-                st.error("Please fill in all fields.")
-            else:
-                ok, msg = withdraw(user["user_id"], amount, pin)
-                if ok:
-                    st.success(msg)
-                    st.rerun()
+            if submitted:
+                if not amount or not pin:
+                    st.error("Please fill in all fields.")
                 else:
-                    st.error(msg)
+                    ok, msg = withdraw(user["user_id"], amount, pin)
+                    if ok:
+                        st.success(msg)
+                        st.rerun()
+                    else:
+                        st.error(msg)
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -544,26 +708,28 @@ def page_withdraw():
 def page_transfer():
     _touch()
     user = st.session_state.user
-    st.markdown("### Transfer Money")
-    balance = get_wallet_summary(user["user_id"])["balance"]
-    st.info(f"Current balance: **{paise_to_rupees(balance)}**")
+    col_l, col_m, col_r = st.columns([0.4, 2.2, 0.4])
+    with col_m:
+        st.markdown("### Transfer Money")
+        balance = get_wallet_summary(user["user_id"])["balance"]
+        st.info(f"Current balance: **{paise_to_rupees(balance)}**")
 
-    with st.form("transfer_form"):
-        receiver = st.text_input("Receiver Username")
-        amount   = st.text_input("Amount (₹)", placeholder="e.g. 250")
-        pin      = st.text_input("Transaction PIN", type="password")
-        submitted = st.form_submit_button("Transfer", use_container_width=True)
+        with st.form("transfer_form"):
+            receiver = st.text_input("Receiver Username")
+            amount   = st.text_input("Amount (₹)", placeholder="e.g. 250")
+            pin      = st.text_input("Transaction PIN", type="password")
+            submitted = st.form_submit_button("Transfer", use_container_width=True)
 
-        if submitted:
-            if not receiver or not amount or not pin:
-                st.error("Please fill in all fields.")
-            else:
-                ok, msg = transfer(user["user_id"], receiver, amount, pin)
-                if ok:
-                    st.success(msg)
-                    st.rerun()
+            if submitted:
+                if not receiver or not amount or not pin:
+                    st.error("Please fill in all fields.")
                 else:
-                    st.error(msg)
+                    ok, msg = transfer(user["user_id"], receiver, amount, pin)
+                    if ok:
+                        st.success(msg)
+                        st.rerun()
+                    else:
+                        st.error(msg)
 
 
 # ══════════════════════════════════════════════════════════════════
